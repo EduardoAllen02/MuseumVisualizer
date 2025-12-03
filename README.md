@@ -27,7 +27,7 @@ HTML / CSS
 
 Three.js Postprocessing (for Non-Baked version)
 
-### ✨ Features
+### 👨🏻‍💻 Features
 
  Two rendering modes:
 
@@ -130,9 +130,11 @@ cd MuseumVisualizer
 
 2. Choose a version to run
 Baked Lighting Version
+
 cd ScriptBakedModel
 
 Non-Baked Lighting Version
+
 cd ScriptNoBaked
 
 3. Run a local server
