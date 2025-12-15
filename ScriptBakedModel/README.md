@@ -2,29 +2,6 @@
 
 Professional 3D building visualization tool built with Three.js and Vanilla JavaScript.
 
-## 📁 Project Structure
-
-```
-project/
-├── index.html              # Main HTML file
-├── README.md               # This file
-├── css/
-│   └── styles.css          # All styles
-├── js/
-│   ├── main.js             # Application entry point
-│   ├── classes/
-│   │   ├── Label3D.js      # 3D label with screen projection
-│   │   ├── SidePanel.js    # Side panel UI manager
-│   │   ├── SceneManager.js # Three.js scene manager
-│   │   └── OrbitControls.js # Custom orbit controls with momentum
-│   └── data/
-│       └── rooms.js        # Room data configuration
-├── models/
-│   ├── museum-bake.glb     # Main building model (baked lighting)
-│   └── windows.glb         # Windows model (emissive material)
-└── assets/
-    └── images/             # (Optional) Local images for rooms
-```
 
 ## 🚀 Setup
 
