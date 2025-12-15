@@ -1,4 +1,4 @@
-![Preview](assets/preview.png)
+![Preview](preview.png)
 
 # Building Visualizer 3D
 
