@@ -1,149 +1,142 @@
-![Preview](preview.png)
-### MuseumVisualizer
+![Preview](assets/preview.png)
 
-MuseumVisualizer is a web-based 3D experience built with Three.js, designed to showcase a museum model accompanied by interactive informational hotspots.
-The project includes two different rendering approaches: one using baked lighting from Blender and another using real-time Three.js lighting with post-processing effects.
+# Building Visualizer 3D
 
-### 🧾Description
+Professional 3D building visualization tool built with Three.js and Vanilla JavaScript.
 
-This project loads a 3D museum model and displays informative SVG icons placed around the building.
-When a user clicks on an icon, a side panel opens showing text and images about different museum rooms.
-The experience includes two versions:
 
-Baked Model Version – lighter, optimized, and using Blender light baking.
+## 🚀 Setup
 
-Non-Baked Version – real-time lighting in Three.js with a bloom post-processing effect applied to the emissive window material.
+1. **Copy all files** to your project directory following the structure above
 
-### 🛠 Technologies Used
+2. **Add your 3D models** to the `models/` folder:
+   - `museum-bake.glb` - Main building with baked lighting
+   - `windows.glb` - Separate windows model
 
-Three.js – WebGL rendering
+3. **Start a local server** (required for ES6 modules):
+   ```bash
+   # Using Python 3
+   python -m http.server 8000
+   
+   # Using Node.js
+   npx serve
+   
+   # Using PHP
+   php -S localhost:8000
+   ```
 
-GLTF / GLB – 3D model format
+4. **Open in browser**: `http://localhost:8000`
 
-Blender – Light baking
+## 🎨 Customization
 
-JavaScript
+### Adding/Editing Room Data
 
-HTML / CSS
+Edit `js/data/rooms.js`:
 
-Three.js Postprocessing (for Non-Baked version)
+```javascript
+export const ROOM_DATA = {
+    "your-room-id": {
+        "id": "your-room-id",
+        "name": "Room Name",
+        "description": "Detailed description...",
+        "image": "https://your-image-url.jpg",
+        "position": { "x": 0, "y": 3, "z": 0 }, // 3D coordinates
+        "details": {
+            "area": "1,200 m²",
+            "specialty": "Art"
+        }
+    }
+};
+```
 
-### 👨🏻‍💻 Features
+### Adjusting Label Positions
 
- Two rendering modes:
+1. Click on a label in the 3D view
+2. Note the room ID
+3. Adjust the `position` values in `rooms.js`
+4. Reload the page
 
-Baked Lighting Version (ScriptBakedModel):
+### Styling
 
-Model with baked lighting
+Edit `css/styles.css`:
+- `--primary-blue`: Main brand color
+- `--light-blue`: Accent color
+- Label sizes: `.label-svg { width: 32px; height: 32px; }`
+- Font sizes: `.label-text { font-size: 12px; }`
 
-Emissive material added to windows
+## 🎮 Controls
 
-No post-processing → better performance
+- **Drag**: Rotate camera around building
+- **Shift + Drag**: Pan camera
+- **Mouse Wheel**: Zoom in/out
+- **Click Label**: Open side panel with room details
+- **ESC**: Close side panel
 
-Non-Baked Lighting Version (ScriptNoBaked):
+## 📦 Dependencies
 
-Real-time lighting setup in Three.js
+- **Three.js r128** (loaded from CDN)
+- **GLTFLoader** (loaded from CDN)
 
-Bloom effect using UnrealBloomPass
+No build tools required - pure ES6 modules!
 
-Neutral paper-like material for the museum building
+## 🏗️ Architecture
 
-🖼 Interactive Hotspots (SVG)
-Icons placed around the museum drawing attention to points of interest.
-Clicking an icon opens a side panel with images and descriptions.
+### Class Responsibilities
 
-🖱 Custom Camera Controls
-Smooth orbit controls with limits tailored to the museum layout.
+**SceneManager**
+- Manages Three.js scene, camera, renderer
+- Loads and manages 3D models
+- Handles lighting and shadows
+- Coordinates labels and controls
 
-🎨 UI and Visual Identity
-Includes footer, logo, info panel, and a consistent dark-navy / violet + light-beige color palette.
+**OrbitControls**
+- Custom camera controls with momentum
+- Smooth rotation and panning
+- Orthographic zoom
 
-### 🧩 The Process
+**Label3D**
+- Projects 3D positions to 2D screen space
+- Smooth interpolation to prevent jitter
+- Click handlers for interactivity
 
-Blender Workflow
+**SidePanel**
+- Displays room information
+- Smooth slide-in/out animations
+- Dynamic content rendering
 
-Material preparation
+## 🐛 Debugging
 
-Baking lightmaps
+Open browser console and access:
 
-Exporting models in GLB/GLTF
+```javascript
+DEBUG.sceneManager  // Scene manager instance
+DEBUG.sidePanel     // Side panel instance
+DEBUG.ROOM_DATA     // Room configuration
+```
 
-Three.js Implementation
+## 📝 Notes
 
-Loading and configuring the museum model
+- Models use **baked lighting** for optimal performance
+- Labels always render **on top** of 3D scene
+- **Orthographic camera** for architectural visualization
+- **Momentum/inertia** for smooth camera movement
 
-Applying emissive window materials
+## 🔧 Troubleshooting
 
-Setting up postprocessing for bloom (Non-Baked)
+**Models not loading?**
+- Check file paths in `SceneManager.js`
+- Ensure models are in `models/` folder
+- Check browser console for errors
 
-Hotspot Placement
+**Labels not showing?**
+- Verify 3D positions in `rooms.js`
+- Check if behind camera (z > 1)
+- Inspect browser console
 
-Positioning SVG icons over 3D points
+**ES6 modules not working?**
+- Must use a local server (not `file://`)
+- Check MIME types in server config
 
-Ensuring correct screen projection for responsiveness
+## 📄 License
 
-User Interface Integration
-
-Side panel animation
-
-Cohesive color palette
-
-Layout structure (header/footer)
-
-Optimization Steps
-
-Reducing draw calls
-
-Adjusting materials
-
-
-### 📚 What I Learned
-
-Properly baking lighting in Blender for WebGL workflows
-
-Balancing two rendering workflows (baked vs real-time lighting)
-
-Implementing Three.js post-processing pipelines
-
-Mapping 2D SVG elements onto a 3D scene consistently
-
-Designing UI that complements a 3D experience
-
-### ⚡How It Can Be Improved
-
-Add guided navigation through the museum (tour mode)
-
-Integrate spatial audio or narration
-
-Increase loading efficiency using Draco or Meshopt compression
-
-Add WebXR / VR
-
-Build a lightweight CMS for editing hotspot content
-
-Improve hotspot interactions (hover effects, categories, animations)
-
-Auto-switch between Baked / Non-Baked depending on device performance
-
-### ▶️ Running the Project
-1. Clone the repository
-cd MuseumVisualizer
-
-2. Choose a version to run
-Baked Lighting Version
-
-cd ScriptBakedModel
-
-Non-Baked Lighting Version
-
-cd ScriptNoBaked
-
-3. Run a local server
-
-npx serve
-
-4. Open the project
-
-You’ll see a local URL in the terminal, usually:
-
-http://localhost:3000
+MIT License - Feel free to use in your projects!
