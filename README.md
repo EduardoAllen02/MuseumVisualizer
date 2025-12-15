@@ -1,3 +1,4 @@
+![Preview](preview.png)
 ### MuseumVisualizer
 
 MuseumVisualizer is a web-based 3D experience built with Three.js, designed to showcase a museum model accompanied by interactive informational hotspots.
